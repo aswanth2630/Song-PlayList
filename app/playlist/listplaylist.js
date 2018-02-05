@@ -63,6 +63,8 @@ angular.module('myApp.listplaylist', ['ngRoute'])
         snap.forEach(function(cs){
           if(count === song){
             cs.getRef().remove();
+            $scope.songsAddedtoPlayList.splice(song,1);
+            $scope.$apply();
           }
           count++;
         });
