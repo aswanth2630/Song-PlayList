@@ -53,6 +53,55 @@
   <button type="submit" class="btn btn-default" ng-disabled="PlayListForm.$invalid">Submit</button>
 </form>
 </div>
+<div class="col-md-6" ng-show = "songDatabase">
+<h4>Songs List</h4>
+</div>
+<div class="row">
+  <div class="col-md-6" ng-show = "songDatabase">
+    <table class="table">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Name</th>
+        <th scope="col">Artist</th>
+        <th scope="col">Duration</th>
+        <th scope="col">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="song in songs">
+        <td>{{$index+1}}</td>
+        <td>{{song.songName}}</td>
+        <td>{{song.songArtist}}</td>
+        <td>{{song.songDuration}}</td>
+        <td><button type="button" class="btn btn-outline-success btn-sm" ng-click="addSongstoPlaylist($index)">Add</button>
+
+  </tr>
+  </tbody>
+  </table>
+  </div>
+<div class="col-md-6" ng-show = "!showAddSongButton">
+  <table class="table">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Name</th>
+      <th scope="col">Artist</th>
+      <th scope="col">Duration</th>
+      <th scope="col">Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr ng-repeat="song in songsAddedtoPlayList">
+      <td>{{$index+1}}</td>
+      <td>{{song.songName}}</td>
+      <td>{{song.songArtist}}</td>
+      <td>{{song.songDuration}}</td>
+    </tr>
+  </tbody>
+  </table>
+</div>
+</div>
 </div>
   <!--<div class = "row" ng-show="showAddPlaylistDetail">
   <div class="col-md-5">
