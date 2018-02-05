@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('myApp.songlist', ['ngRoute','StudentService'])
+angular.module('myApp.songlist', ['ngRoute'])
 
 .config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/songlist', {
@@ -8,23 +8,21 @@ angular.module('myApp.songlist', ['ngRoute','StudentService'])
     controller: 'songlistCtrl'
   });
 }])
+/*.service('SongDataOp', ['$http', '$firebaseArray', function ($http,$firebaseArray){
+  var ref = firebase.database().ref().child("songlist");
+  var SongDataOp = {};
 
-.controller('songlistCtrl', ['$scope','$firebaseArray','StudentDataOp',function($scope,$firebaseArray,StudentDataOp) {
-    /*  $scope.status;
-      $scope.students;
-      getSongs();
+  SongDataOp.getSongs = function () {
+    console.log("saa "+ $http.get(ref));
+      return $http.get(ref);
+  };
 
-function getSongs() {
-        StudentDataOp.getSongs()
-            .success(function (song) {
-                $scope.students = song;
-            })
-            .error(function (error) {
-                $scope.status = 'Unable to load song data: ' + error.message;
-            });
-    }
-console.log("ssss "+students.songName);
-*/
+  console.log("ada "+ SongDataOp);
+}])*/
+
+.controller('songlistCtrl', ['$scope','$firebaseArray',function($scope,$firebaseArray) {
+
+
     var ref = firebase.database().ref().child("songlist");
     //console.log("aa "+ref)
     $scope.songs = $firebaseArray(ref);

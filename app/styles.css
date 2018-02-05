@@ -167,5 +167,12 @@ body {
 }
 
 h4{
+    margin: 0.3cm 0.5cm 0.3cm 0.5cm;
   font-family: Baskerville, "Baskerville Old Face", "Goudy Old Style", Garamond, "Times New Roman", serif;
+}
+
+.btn{
+
+    margin: 0.2cm 0.5cm 0.2cm 0.5cm;
+
 }

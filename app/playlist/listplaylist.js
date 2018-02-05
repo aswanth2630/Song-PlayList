@@ -10,7 +10,6 @@ angular.module('myApp.listplaylist', ['ngRoute'])
 }])
 
 .controller('listplaylistCtrl', ['$scope','$firebaseArray',function($scope,$firebaseArray) {
-console.log("aass");
 
     var playref = firebase.database().ref().child("playlist");
     var songref = firebase.database().ref().child("songlist");
@@ -19,6 +18,40 @@ console.log("aass");
     $scope.songs = $firebaseArray(songref);
     $scope.showPlaylist = false;
     var currentId = null;
+
+    $scope.showAddform = false;
+    $scope.showTotalList = true;
+    $scope.showAddPlaylistDetail = true;
+    $scope.showAddSongButton = true;
+    $scope.songDatabase = false;
+
+    var playlistId = null;
+    var playname = null;
+
+    $scope.addPlay = function(){
+      $scope.showAddform = true;
+      $scope.showTotalList = false;
+
+    }
+
+ $scope.addPlaylist = function(){
+    console.log("Adding Songs to database");
+
+    $scope.playlist.$add({
+      playlistName:$scope.playlistName,
+      playlistDescription:$scope.playlistDescription,
+    }).then(function(ref){
+      playlistId = ref.key;
+      playname = $scope.playlistName
+      $scope.playlistName = '';
+      $scope.playlistDescription = '';
+
+    });
+    $scope.songDatabase = true;
+    $scope.showAddform = false;
+    $scope.showAddSongButton = false;
+
+  }
 
     $scope.removeSong = function(song){
       var count = 0;
@@ -31,6 +64,36 @@ console.log("aass");
           }
           count++;
         });
+});
+}
+$scope.addSongstoPlaylist = function(ref){
+
+  var refSongsinPlaylist = playref.child(playlistId+'/songs');
+
+  songref.on('value',function(snap){
+      var key = Object.keys(snap.val())[ref];
+      refSongsinPlaylist.push(key);
+  });
+  $scope.songsAddedtoPlayList = [];
+  refSongsinPlaylist.once("value")
+.then(function(snapshot) {
+  snapshot.forEach(function(childSnapshot) {
+    var key = childSnapshot.key;
+    var childData = childSnapshot.val();
+    angular.forEach($scope.songs, function(value, key) {
+        if(value.$id === childData){
+          console.log("success" + value.songName);
+          // Add song to a songsperplaylist  object
+          var song = {};
+            song["songName"] = value.songName;
+            song["songArtist"] = value.songArtist;
+            song["songDuration"] = value.songDuration;
+            $scope.songsAddedtoPlayList.push(song);
+            $scope.$apply();
+        }
+      });
+  $scope.showAddSongButton = false;
+});
 });
 }
     $scope.showSongsInThePlaylist = function(ref){
@@ -60,86 +123,5 @@ console.log("aass");
           });
         });
       });
-
-
-
-              // Add song to a songsperplaylist  object
-            /*  var song = {};
-                song["songName"] = value.songName;
-                song["songArtist"] = value.songArtist;
-                song["songDuration"] = value.songDuration;
-                $scope.songsAddedtoPlayList.push(song);
-                $scope.$apply();
-                */
-      /*      }
-          });
-    });
-  });
-*/
     }
-
-    //console.log("aaa "+ $firebaseArray(songref));
-/*  //  $scope.showEditForm = false;
-    $scope.showAddform = false;
-    $scope.showAddSongButton = true;
-    $scope.songDatabase = false;
-
-    var songsAddedtoPlayList = [];
-
-    var playlistId = null;
-    var playname = null;
-
-
- $scope.addPlaylist = function(){
-    console.log("Adding Songs to database");
-
-    $scope.playlist.$add({
-      playlistName:$scope.playlistName,
-      playlistDescription:$scope.playlistDescription,
-    }).then(function(ref){
-      playlistId = ref.key;
-      console.log(playlistId);
-      playname = $scope.playlistName
-      $scope.playlistName = '';
-      $scope.playlistDescription = '';
-
-    });
-    $scope.showAddform = true;
-    $scope.showAddSongButton = false;
-
-  }
-
-  $scope.songsAdd = function(){
-    $scope.songDatabase = true;
-
-  }
-
-  $scope.addSongstoPlaylist = function(ref){
-
-    var refSongsinPlaylist = playref.child(playlistId+'/songs');
-
-    songref.on('value',function(snap){
-        var key = Object.keys(snap.val())[ref];
-        refSongsinPlaylist.push(key);
-    });
-
-    refSongsinPlaylist.once("value")
-  .then(function(snapshot) {
-    snapshot.forEach(function(childSnapshot) {
-
-      var key = childSnapshot.key;
-      var childData = childSnapshot.val();
-      angular.forEach($scope.songs, function(value, key) {
-          //console.log(value, key);
-          if(value.$id === childData){
-            console.log("success" + value.$id);
-            // Add song to a songsperplaylist  object
-          }
-        });
-  });
-});
-
-  }
-
-*/
 }]);
