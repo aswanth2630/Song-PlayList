@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('myApp.songlist', ['ngRoute'])
+angular.module('myApp.songlist', ['ngRoute','StudentService'])
 
 .config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/songlist', {
@@ -9,12 +9,26 @@ angular.module('myApp.songlist', ['ngRoute'])
   });
 }])
 
-.controller('songlistCtrl', ['$scope','$firebaseArray',function($scope,$firebaseArray) {
+.controller('songlistCtrl', ['$scope','$firebaseArray','StudentDataOp',function($scope,$firebaseArray,StudentDataOp) {
+    /*  $scope.status;
+      $scope.students;
+      getSongs();
 
-
+function getSongs() {
+        StudentDataOp.getSongs()
+            .success(function (song) {
+                $scope.students = song;
+            })
+            .error(function (error) {
+                $scope.status = 'Unable to load song data: ' + error.message;
+            });
+    }
+console.log("ssss "+students.songName);
+*/
     var ref = firebase.database().ref().child("songlist");
     //console.log("aa "+ref)
     $scope.songs = $firebaseArray(ref);
+
     $scope.showEditForm = false;
     $scope.showAddform = false;
 
@@ -37,31 +51,10 @@ $scope.showAddSongsForm = function(){
   $scope.songArtist = '';
   $scope.songDuration = '';
 }
-/*
-function userExistsCallback(userId, exists) {
-  if (exists) {
-    alert('user ' + userId + ' exists!');
-  } else {
-    alert('user ' + userId + ' does not exist!');
-  }
-}
 
-// Tests to see if /users/<userId> has any data.
-function checkIfUserExists(userId) {
-
-    userExistsCallback(userId, exists);
-  });
-}
-*/
  $scope.addSongs = function(){
     console.log("Adding Songs to database");
-/*
-angular.forEach($scope.songs, function(value, key) {
-    //console.log(value, key);
-    if(value.songName === $scope.songName){
 
-    }
-  });*/
     $scope.songs.$add({
       songName:$scope.songName,
       songArtist:$scope.songArtist,

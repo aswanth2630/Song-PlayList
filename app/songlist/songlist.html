@@ -1,6 +1,6 @@
 
 <div class="row" ng-controller="songlistCtrl">
-<div class="col-md-5" ng-show="showAddform">
+<div class="col-md-5"><!-- ng-show="showAddform">-->
   <h4> Add Songs</h4>
 <form  name="songForm" class"horizontal" ng-submit="addSongs(songForm.$valid)">
   <div class="form-group row">
@@ -19,7 +19,7 @@
 </form>
 </div>
 
-<div class="col-md-5" ng-show="showEditForm">
+<div class="col-md-5"><!-- ng-show="showEditForm">-->
   <h4> Edit Songs</h4>
 <form  name="editSongForm" class"horizontal" ng-submit="editSong(editSongForm.$valid)">
   <div class="form-group row">
@@ -51,7 +51,7 @@
     </tr>
   </thead>
   <tbody>
-    <tr ng-repeat="song in songs">
+    <tr ng-repeat="song in students">
       <td>{{$index+1}}</td>
       <td>{{song.songName}}</td>
       <td>{{song.songArtist}}</td>

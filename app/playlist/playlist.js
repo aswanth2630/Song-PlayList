@@ -3,11 +3,12 @@
 angular.module('myApp.playlist', ['ngRoute'])
 
 .config(['$routeProvider', function($routeProvider) {
-  $routeProvider.when('/playlist', {
+  $routeProvider.when('/playlist1', {
     templateUrl: 'playlist/playlist.html',
     controller: 'playlistCtrl'
   });
 }])
+
 
 .controller('playlistCtrl', ['$scope','$firebaseArray',function($scope,$firebaseArray) {
 
@@ -17,13 +18,11 @@ angular.module('myApp.playlist', ['ngRoute'])
 
     $scope.playlist = $firebaseArray(playref);
     $scope.songs = $firebaseArray(songref);
-    //console.log("aaa "+ $firebaseArray(songref));
-  //  $scope.showEditForm = false;
+
     $scope.showAddform = false;
     $scope.showAddSongButton = true;
     $scope.songDatabase = false;
 
-    var songsAddedtoPlayList = [];
 
     var playlistId = null;
     var playname = null;
@@ -37,19 +36,14 @@ angular.module('myApp.playlist', ['ngRoute'])
       playlistDescription:$scope.playlistDescription,
     }).then(function(ref){
       playlistId = ref.key;
-      console.log(playlistId);
       playname = $scope.playlistName
       $scope.playlistName = '';
       $scope.playlistDescription = '';
 
     });
+    $scope.songDatabase = true;
     $scope.showAddform = true;
     $scope.showAddSongButton = false;
-
-  }
-
-  $scope.songsAdd = function(){
-    $scope.songDatabase = true;
 
   }
 
@@ -61,20 +55,25 @@ angular.module('myApp.playlist', ['ngRoute'])
         var key = Object.keys(snap.val())[ref];
         refSongsinPlaylist.push(key);
     });
-
+    $scope.songsAddedtoPlayList = [];
     refSongsinPlaylist.once("value")
   .then(function(snapshot) {
     snapshot.forEach(function(childSnapshot) {
-
       var key = childSnapshot.key;
       var childData = childSnapshot.val();
       angular.forEach($scope.songs, function(value, key) {
-          //console.log(value, key);
           if(value.$id === childData){
-            console.log("success" + value.$id);
+            console.log("success" + value.songName);
             // Add song to a songsperplaylist  object
+            var song = {};
+              song["songName"] = value.songName;
+              song["songArtist"] = value.songArtist;
+              song["songDuration"] = value.songDuration;
+              $scope.songsAddedtoPlayList.push(song);
+              $scope.$apply();
           }
         });
+
   });
 });
 
