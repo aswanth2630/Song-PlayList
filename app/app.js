@@ -5,7 +5,6 @@ angular.module('myApp', [
   'ngRoute',
   'firebase',
   'myApp.songlist',
-  'myApp.playlist',
   'myApp.listplaylist',
 ]).
 config(['$routeProvider', function($routeProvider) {

@@ -24,6 +24,7 @@ angular.module('myApp.listplaylist', ['ngRoute'])
     $scope.showAddPlaylistDetail = true;
     $scope.showAddSongButton = true;
     $scope.songDatabase = false;
+    $scope.showEditForm = false;
 
     var playlistId = null;
     var playname = null;
@@ -52,7 +53,9 @@ angular.module('myApp.listplaylist', ['ngRoute'])
     $scope.showAddSongButton = false;
 
   }
-
+  $scope.navigateToSongDatabase = function(){
+    $location.path( '/new-page.html' );
+  }
     $scope.removeSong = function(song){
       var count = 0;
       var refSongsinPlaylist = playref.child(currentId+'/songs');
@@ -60,7 +63,6 @@ angular.module('myApp.listplaylist', ['ngRoute'])
         snap.forEach(function(cs){
           if(count === song){
             cs.getRef().remove();
-          $scope.refresh();
           }
           count++;
         });
@@ -124,4 +126,26 @@ $scope.addSongstoPlaylist = function(ref){
         });
       });
     }
+    $scope.editPlay = function(){
+      //$scope.showEditForm = true;
+    //  $scope.showAddform = false;
+    //  $scope.showTotalList = false;
+    }
+    $scope.editPlayList = function(){
+      $scope.showAddform = false;
+      var id = $scope.id;
+
+      var record = $scope.playlist.$getRecord(id);
+
+      record.playlistName = $scope.playlistName;
+      record.playlistDescription = $scope.playlistDescription;
+
+      $scope.playlist.$save(record).then(function(ref){
+        console.log(ref.key);
+      });
+      $scope.playlistName = '';
+      $scope.playlistDescription = '';
+      $scope.showEditForm = false;
+    }
+
 }]);
