@@ -6,14 +6,13 @@
     <div class="row">
       <button class="btn btn-secondary float-left" ng-click="addPlay()">Add Playlist</button>
       <div class="panel-heading"><h4>PlayList Details</h4></div>
-      <button class="btn btn-secondary btn-sm" ng-click="editPlay()">Edit Playlist</button>
+      <button class="btn btn-secondary btn-sm" ng-click="submitChanges()">Submit</button>
     </div>
     <div class="panel-body">
       <div class="list-group">
         <div class="row" ng-repeat = "play in playlist">
-          <button type="button" class="list-group-item list-group-item-action" ng-click="showSongsInThePlaylist($index)">
-            {{play.playlistName}}
-          </button>
+          <input class="list-group-item list-group-item-action" ng-click="showSongsInThePlaylist($index)" value={{play.playlistName}}>
+          <!--<button class="btn btn-outline-info btn-sm">x</button>-->
       </div>
       </div>
     </div>
@@ -21,7 +20,8 @@
 </div>
 <div class="col-md-7" ng-show="showPlaylist">
   <br>
-    <a class="float-left" href="/../#/songlist"> click here to add song to songs database</a>
+    <button class="btn btn-primary btn-small float-left" ng-click="gotoPage('/songlist')">Add Songs to Database</button>
+    <button class="btn btn-primary btn-small float-left" ng-click="addSongtolist($index)">Add Songs to Playlist</button>
     <br>
   <table class="table">
   <thead class="thead-dark">
@@ -39,8 +39,7 @@
       <td>{{song.songName}}</td>
       <td>{{song.songArtist}}</td>
       <td>{{song.songDuration}}</td>
-      <td><button type="button" class="btn btn-outline-danger btn-sm" ng-click = "removeSong($index)">X</button>
-        <button type="button" class="btn btn-outline-info btn-sm" ng-click = "showEditSongs($index)">E</button></td>  </tbody>
+      <td><button type="button" class="btn btn-outline-danger btn-sm" ng-click = "removeSong($index)">X</button></td></tbody>
 </table>
 </div>
 </div>

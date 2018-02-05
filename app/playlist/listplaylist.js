@@ -9,7 +9,7 @@ angular.module('myApp.listplaylist', ['ngRoute','ngScrollbars'])
   });
 }])
 
-.controller('listplaylistCtrl', ['$scope','$firebaseArray',function($scope,$firebaseArray) {
+.controller('listplaylistCtrl', ['$scope','$firebaseArray','$location',function($scope,$firebaseArray,$location) {
 
     var playref = firebase.database().ref().child("playlist");
     var songref = firebase.database().ref().child("songlist");
@@ -25,6 +25,7 @@ angular.module('myApp.listplaylist', ['ngRoute','ngScrollbars'])
     $scope.showAddSongButton = true;
     $scope.songDatabase = false;
     $scope.showEditForm = false;
+    $scope.addFlag = false;
 
     $scope.searchSong = '';
     var playlistId = null;
@@ -33,7 +34,6 @@ angular.module('myApp.listplaylist', ['ngRoute','ngScrollbars'])
     $scope.addPlay = function(){
       $scope.showAddform = true;
       $scope.showTotalList = false;
-
     }
 
     $scope.resetPlaylistForm = function(){
@@ -41,6 +41,12 @@ angular.module('myApp.listplaylist', ['ngRoute','ngScrollbars'])
       $scope.playlistDescription = '';
     }
 
+    $scope.submitChanges = function(){
+
+    }
+    $scope.gotoPage= function(paths){
+      $location.path(paths);
+    }
  $scope.addPlaylist = function(){
     $scope.playlist.$add({
       playlistName:$scope.playlistName,
@@ -55,6 +61,7 @@ angular.module('myApp.listplaylist', ['ngRoute','ngScrollbars'])
     $scope.songDatabase = true;
     $scope.showAddform = false;
     $scope.showAddSongButton = false;
+    $scope.addFlag = true;
 
     swal("Good job!", "You created the playlist!", "success");
   }
@@ -63,6 +70,10 @@ angular.module('myApp.listplaylist', ['ngRoute','ngScrollbars'])
       playref.on("value",function(snapshot){
         snapshot.forEach(function(cs){
           if(cs.key === playlistId){
+            $scope.currentPlaylistName = cs.val().playlistName;
+            $scope.currentPlaylistDescription = cs.val().playlistDescription;
+          }
+          else if(cs.key === currentId){
             $scope.currentPlaylistName = cs.val().playlistName;
             $scope.currentPlaylistDescription = cs.val().playlistDescription;
           }
@@ -83,10 +94,25 @@ angular.module('myApp.listplaylist', ['ngRoute','ngScrollbars'])
         });
 });
 }
+
+$scope.addSongtolist = function(){
+  $scope.showAddform = false;
+  $scope.showTotalList = false;
+  $scope.songDatabase = true;
+  $scope.showEditForm = false;
+
+  $scope.addSongstoPlaylist();
+
+}
 // Adding songs to playlist
 
 $scope.addSongstoPlaylist = function(ref){
-  var refSongsinPlaylist = playref.child(playlistId+'/songs');
+  if($scope.addFlag === true){
+    var refSongsinPlaylist = playref.child(playlistId+'/songs');
+  }
+  else{
+    var refSongsinPlaylist = playref.child(currentId+'/songs');
+  }
   songref.on('value',function(snap){
       var key = Object.keys(snap.val())[ref];
       refSongsinPlaylist.push(key);
@@ -142,26 +168,4 @@ $scope.addSongstoPlaylist = function(ref){
         });
       });
     }
-    $scope.editPlay = function(){
-      //$scope.showEditForm = true;
-    //  $scope.showAddform = false;
-    //  $scope.showTotalList = false;
-    }
-    $scope.editPlayList = function(){
-      $scope.showAddform = false;
-      var id = $scope.id;
-
-      var record = $scope.playlist.$getRecord(id);
-
-      record.playlistName = $scope.playlistName;
-      record.playlistDescription = $scope.playlistDescription;
-
-      $scope.playlist.$save(record).then(function(ref){
-        console.log(ref.key);
-      });
-      $scope.playlistName = '';
-      $scope.playlistDescription = '';
-      $scope.showEditForm = false;
-    }
-
 }]);
