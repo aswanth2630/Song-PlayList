@@ -6,6 +6,7 @@ angular.module('myApp', [
   'firebase',
   'myApp.songlist',
   'myApp.listplaylist',
+  'ngScrollbars'
 ]).
 config(['$routeProvider', function($routeProvider) {
   $routeProvider.otherwise({redirectTo: '/playlist'});

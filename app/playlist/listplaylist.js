@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('myApp.listplaylist', ['ngRoute'])
+angular.module('myApp.listplaylist', ['ngRoute','ngScrollbars'])
 
 .config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/playlist', {
@@ -26,6 +26,7 @@ angular.module('myApp.listplaylist', ['ngRoute'])
     $scope.songDatabase = false;
     $scope.showEditForm = false;
 
+    $scope.searchSong = '';
     var playlistId = null;
     var playname = null;
 

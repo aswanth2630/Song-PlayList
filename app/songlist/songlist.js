@@ -8,17 +8,7 @@ angular.module('myApp.songlist', ['ngRoute'])
     controller: 'songlistCtrl'
   });
 }])
-/*.service('SongDataOp', ['$http', '$firebaseArray', function ($http,$firebaseArray){
-  var ref = firebase.database().ref().child("songlist");
-  var SongDataOp = {};
 
-  SongDataOp.getSongs = function () {
-    console.log("saa "+ $http.get(ref));
-      return $http.get(ref);
-  };
-
-  console.log("ada "+ SongDataOp);
-}])*/
 
 .controller('songlistCtrl', ['$scope','$firebaseArray',function($scope,$firebaseArray) {
 
@@ -29,22 +19,30 @@ angular.module('myApp.songlist', ['ngRoute'])
 
     $scope.showEditForm = false;
     $scope.showAddform = false;
+    $scope.showSongTable = true;
+    $scope.searchSong = '';
 
   //console.log("aa "+ref.child(ref.key));
 
     $scope.showEditSongs = function(song){
       $scope.showEditForm = true;
       $scope.showAddform = false;
+      $scope.showSongTable = false;
       $scope.id = song.$id;
       $scope.songName = song.songName;
       $scope.songArtist = song.songArtist;
       $scope.songDuration = song.songDuration;
     }
-
+$scope.resetSongForm = function(){
+  $scope.songName = '';
+  $scope.songArtist = '';
+  $scope.songDuration = '';
+}
 
 $scope.showAddSongsForm = function(){
   $scope.showEditForm = false;
   $scope.showAddform = true;
+  $scope.showSongTable = false;
   $scope.songName = '';
   $scope.songArtist = '';
   $scope.songDuration = '';
@@ -65,11 +63,14 @@ $scope.showAddSongsForm = function(){
       $scope.songArtist = '';
       $scope.songDuration = '';
     });
+    swal("Good job!", "You created the song!", "success");
     $scope.showAddform = false;
+    $scope.showSongTable = true;
   }
 
   $scope.removeSong = function(song){
     $scope.songs.$remove(song);
+    swal(song.songName, "is deleted from the database!", "success");
   }
 
   $scope.editSong = function(){
@@ -88,7 +89,9 @@ $scope.showAddSongsForm = function(){
     $scope.songName = '';
     $scope.songArtist = '';
     $scope.songDuration = '';
+    swal(record.songName, "is modified!", "success");
     $scope.showEditForm = false;
+    $scope.showSongTable = true;
   }
 
 }]);

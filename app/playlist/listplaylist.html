@@ -81,6 +81,15 @@
 </div>
 <div class="row">
   <div class="col-md-12" ng-show = "songDatabase">
+<form>
+  <div class="form-group col-md-5">
+    <div class="input-group">
+      <div class="input-group-addon"><i class="fa fa-search"></i></div>
+      <input type="text" class="form-control" placeholder="Search by name" ng-model="searchSong">
+    </div>
+  </div>
+</form>
+<div ng-scrollbars ng-scrollbars-config="config">
     <table class="table">
     <thead class="thead-dark">
       <tr>
@@ -92,7 +101,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr ng-repeat="song in songs">
+      <tr ng-repeat="song in songs| filter: searchSong">
         <td>{{$index+1}}</td>
         <td>{{song.songName}}</td>
         <td>{{song.songArtist}}</td>
@@ -102,6 +111,7 @@
   </tr>
   </tbody>
   </table>
+</div>
   </div>
 </div>
 </div>

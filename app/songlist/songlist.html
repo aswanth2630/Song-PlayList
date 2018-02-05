@@ -16,6 +16,8 @@
       <input type="text" class="form-control" ng-model="songDuration" placeholder="Please enter in seconds" ng-pattern="/^(0|\-?[1-9][0-9]*)$/" required>
   </div>
   <button type="submit" class="btn btn-default" ng-disabled="songForm.$invalid">Submit</button>
+  <button class="btn btn-default" ng-click="resetSongForm()">Reset</button>
+
 </form>
 </div>
 
@@ -35,11 +37,20 @@
       <input type="text" class="form-control" ng-model="songDuration" placeholder="Please enter in seconds" ng-pattern="/^(0|\-?[1-9][0-9]*)$/" required>
   </div>
   <button type="submit" class="btn btn-default" ng-disabled="editSongForm.$invalid">Submit</button>
+  <button class="btn btn-default" ng-click="resetSongForm()">Reset</button>
+
 </form>
 </div>
-
-<div class="col-lg-7">
-  <h4>Songs Details</h4>
+<div class="col-md-12" ng-show="showSongTable">
+<form>
+    <div class="form-group">
+      <div class="input-group">
+        <div class="input-group-addon"><i class="fa fa-search"></i></div>
+        <input id="searchbox" type="text" class="form-control col-md-5" placeholder="Search by name" ng-model="searchSong">
+      </div>
+    </div>
+  </form>
+<button type="button" class="btn btn-primary btn-sm" ng-click="showAddSongsForm()">Create Song</button>
   <table class="table">
   <thead class="thead-dark">
     <tr>
@@ -51,7 +62,7 @@
     </tr>
   </thead>
   <tbody>
-    <tr ng-repeat="song in songs">
+    <tr ng-repeat="song in songs| filter: searchSong">
       <td>{{$index+1}}</td>
       <td>{{song.songName}}</td>
       <td>{{song.songArtist}}</td>
@@ -62,74 +73,5 @@
     </tr>
   </tbody>
 </table>
-<button type="button" class="btn btn-primary btn-sm" ng-click="showAddSongsForm()">Create Song</button>
-
-
-<!--
-  <table class="table table-striped">
-    <thead>
-      <tr>Name</tr>
-      <tr>Description</tr>
-    </thead>
-    <tbody>
-      <tr ng-repeat="play in playlist">
-        <td>{{play.playlistName}}</td>
-        <td>{{play.playlistDescription}}</td>
-        <td><a class = "btn btn-default" ng-click = "showEditPlayList(play)">Edit</a><a class = "btn btn-danger" ng-click = "removePlayList(play)">Delete</a></td>
-      </tr>
-    </tbody>
-  </table>
 </div>
 </div>
--->
-<!--
-<div class = "row" ng-controller="playlistCtrl">
-  <div class="col-md-5" ng-show="addFormShow">
-      <h3>Add PlayList</h3>
-      <form ng-submit="addPlayList()">
-        <div class="form-group row">
-          <label>Name</label>
-            <input type="text" class="form-control" ng-model="name" placeholder="PlayList Name">
-        </div>
-        <div class="form-group row">
-          <label>Description</label>
-            <input type="text" class="form-control" ng-model="description" placeholder="PlayList Description">
-        </div>
-        <button type="submit" class="btn btn-default">Submit</button>
-      </form>
-  </div>
-
-  <div class="col-md-5" ng-show="editFormShow">
-      <h3>Edit PlayList</h3>
-      <form ng-submit="editPlayList()">
-        <div class="form-group row">
-          <label>Name</label>
-            <input type="text" class="form-control" ng-model="name" placeholder="PlayList Name">
-        </div>
-        <div class="form-group row">
-          <label>Description</label>
-            <input type="text" class="form-control" ng-model="description" placeholder="PlayList Description">
-        </div>
-        <button type="submit" class="btn btn-default">Submit</button>
-      </form>
-  </div>
-
-  <div class="col-md-7">
-    <h3>PlayList Details</h3>
-    <table class="table table-striped">
-      <thead>
-        <tr>Name</tr>
-        <tr>Description</tr>
-      </thead>
-      <tbody>
-        <tr ng-repeat="play in playlist">
-          <td>{{play.playlistName}}</td>
-          <td>{{play.playlistDescription}}</td>
-          <td><a class = "btn btn-default" ng-click = "showEditPlayList(play)">Edit</a><a class = "btn btn-danger" ng-click = "removePlayList(play)">Delete</a></td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-
-</div>
--->
