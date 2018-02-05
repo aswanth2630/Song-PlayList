@@ -35,9 +35,12 @@ angular.module('myApp.listplaylist', ['ngRoute'])
 
     }
 
- $scope.addPlaylist = function(){
-    console.log("Adding Songs to database");
+    $scope.resetPlaylistForm = function(){
+      $scope.playlistName = '';
+      $scope.playlistDescription = '';
+    }
 
+ $scope.addPlaylist = function(){
     $scope.playlist.$add({
       playlistName:$scope.playlistName,
       playlistDescription:$scope.playlistDescription,
@@ -52,10 +55,19 @@ angular.module('myApp.listplaylist', ['ngRoute'])
     $scope.showAddform = false;
     $scope.showAddSongButton = false;
 
+    swal("Good job!", "You created the playlist!", "success");
   }
-  $scope.navigateToSongDatabase = function(){
-    $location.path( '/new-page.html' );
-  }
+
+  //get the current playlist details
+      playref.on("value",function(snapshot){
+        snapshot.forEach(function(cs){
+          if(cs.key === playlistId){
+            $scope.currentPlaylistName = cs.val().playlistName;
+            $scope.currentPlaylistDescription = cs.val().playlistDescription;
+          }
+        });
+      });
+
     $scope.removeSong = function(song){
       var count = 0;
       var refSongsinPlaylist = playref.child(currentId+'/songs');
@@ -70,10 +82,10 @@ angular.module('myApp.listplaylist', ['ngRoute'])
         });
 });
 }
+// Adding songs to playlist
+
 $scope.addSongstoPlaylist = function(ref){
-
   var refSongsinPlaylist = playref.child(playlistId+'/songs');
-
   songref.on('value',function(snap){
       var key = Object.keys(snap.val())[ref];
       refSongsinPlaylist.push(key);
@@ -94,6 +106,7 @@ $scope.addSongstoPlaylist = function(ref){
             song["songDuration"] = value.songDuration;
             $scope.songsAddedtoPlayList.push(song);
             $scope.$apply();
+            swal(value.songName, "is added to  "+$scope.currentPlaylistName, "success");
         }
       });
   $scope.showAddSongButton = false;
