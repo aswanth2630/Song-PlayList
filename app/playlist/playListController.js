@@ -156,6 +156,7 @@ angular.module('myApp.playList', ['ngRoute', 'ngScrollbars'])
       $scope.showPlaylist = true;
       $scope.songsAddedtoPlayList = [];
       $scope.keyStorage = [];
+      $scope.selected = ($scope.selected === ref ? null : ref);
       playref.once("value").then(function (snap) {
         snap.forEach(function (cs) {
           $scope.keyStorage.push(cs.key);

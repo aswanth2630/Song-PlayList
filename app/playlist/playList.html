@@ -1,6 +1,9 @@
 
 <div ng-controller="playListController">
   <div class="row" ng-show="showTotalList">
+    <div class="col-md-12">
+      <button class="btn btn-outline-info btn-small pull-right" ng-click="gotoPage('/songlist')"><i class="fa fa-plus"></i>Add songs to Database</button>
+    </div>
   <div class="col-md-5">
   <div class="panel panel-default">
     <div class="row">
@@ -20,7 +23,6 @@
 </div>
 <div class="col-md-7" ng-show="showPlaylist">
   <br>
-    <button class="btn btn-outline-info btn-small float-left" ng-click="gotoPage('/songlist')"><i class="fa fa-plus"></i>Add songs to Database</button>
     <button class="btn btn-outline-info btn-small float-left" ng-click="addSongtolist($index)"><i class="fa fa-plus"></i>Add songs to playlist</button>
     <br>
   <table class="table">
