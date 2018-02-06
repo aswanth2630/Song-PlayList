@@ -41,9 +41,19 @@ angular.module('myApp.playList', ['ngRoute', 'ngScrollbars'])
       $scope.playlistDescription = '';
     }
 
-    $scope.submitChanges = function () {
-
+    $scope.submitChange = function (index) {
+      Object.keys($scope.playlist[index]).forEach(function (key) {
+        var val = $scope.playlist[index][2];
+        //  console.log("fsadfas "+$scope.playlist[index][key]);
+      console.log("dasda "+ $scope.playlist[index][key]);
+      });
     }
+
+    $scope.deleteChange = function (index) {
+      $scope.playlist.$remove($scope.playlist[index]);
+      $scope.apply;
+    }
+
     $scope.gotoPage = function (paths) {
       $location.path(paths);
     }

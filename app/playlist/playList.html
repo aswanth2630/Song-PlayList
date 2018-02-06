@@ -6,13 +6,13 @@
     <div class="row">
       <button class="btn btn-secondary float-left" ng-click="addPlay()">Add Playlist</button>
       <div class="panel-heading"><h4>PlayList Details</h4></div>
-      <button class="btn btn-secondary btn-sm" ng-click="submitChanges()">Submit</button>
     </div>
     <div class="panel-body">
       <div class="list-group">
         <div class="row" ng-repeat = "play in playlist">
-          <input class="list-group-item list-group-item-action" ng-click="showSongsInThePlaylist($index)" value={{play.playlistName}}>
-          <!--<button class="btn btn-outline-info btn-sm">x</button>-->
+          <input class="col-md-8 list-group-item list-group-item-action pull-left" ng-click="showSongsInThePlaylist($index)" value={{play.playlistName}}>
+          <button class="col-md-1 btn btn-outline-info btn-sm pull-right" ng-click="deleteChange($index)">x</button>
+          <button class="col-md-1 btn btn-outline-info btn-sm" ng-click="submitChange($index)"><i class="fa fa-pencil"></i></button>
       </div>
       </div>
     </div>
@@ -20,8 +20,8 @@
 </div>
 <div class="col-md-7" ng-show="showPlaylist">
   <br>
-    <button class="btn btn-primary btn-small float-left" ng-click="gotoPage('/songlist')">Add Songs to Database</button>
-    <button class="btn btn-primary btn-small float-left" ng-click="addSongtolist($index)">Add Songs to Playlist</button>
+    <button class="btn btn-outline-info btn-small float-left" ng-click="gotoPage('/songlist')"><i class="fa fa-plus"></i>Add songs to Database</button>
+    <button class="btn btn-outline-info btn-small float-left" ng-click="addSongtolist($index)"><i class="fa fa-plus"></i>Add songs to playlist</button>
     <br>
   <table class="table">
   <thead class="thead-dark">
@@ -83,7 +83,6 @@
 <form>
   <div class="form-group col-md-5">
     <div class="input-group">
-      <div class="input-group-addon"><i class="fa fa-search"></i></div>
       <input type="text" class="form-control" placeholder="Search by name" ng-model="searchSong">
     </div>
   </div>
@@ -105,7 +104,7 @@
         <td>{{song.songName}}</td>
         <td>{{song.songArtist}}</td>
         <td>{{song.songDuration}}</td>
-        <td><button type="button" class="btn btn-outline-success btn-sm" ng-click="addSongstoPlaylist($index)">Add</button>
+        <td><button type="button" class="btn btn-outline-success btn-sm" ng-click="addSongstoPlaylist($index)"><i class="fa fa-plus"></i></button>
 
   </tr>
   </tbody>
@@ -114,105 +113,3 @@
   </div>
 </div>
 </div>
-  <!--<div class = "row" ng-show="showAddPlaylistDetail">
-  <div class="col-md-5">
-  <div class="panel panel-default">
-    <div class="container">
-      <div class="panel-heading"><h4>PlayList Details</h4></div>
-      <div>
-      <button class="btn btn-secondary float-left" ng-click="addPlay()">Add Playlist</button>
-    </div>
-    </div>
-    <div class="panel-body">
-      <div class="list-group">
-  <button ng-repeat = "play in playlist" type="button" class="list-group-item list-group-item-action" ng-click="showSongsInThePlaylist($index)">
-    {{play.playlistName}}
-  </button>
-      </div>
-    </div>
-  </div>
-</div>
-<div class="col-md-7" ng-show="showPlaylist">
-  <table class="table">
-  <thead class="thead-dark">
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">Name</th>
-      <th scope="col">Artist</th>
-      <th scope="col">Duration</th>
-      <th scope="col">Action</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr ng-repeat="song in songsAddedtoPlayList">
-      <td>{{$index+1}}</td>
-      <td>{{song.songName}}</td>
-      <td>{{song.songArtist}}</td>
-      <td>{{song.songDuration}}</td>
-      <td><button type="button" class="btn btn-outline-danger btn-sm" ng-click = "removeSong($index)">X</button>
-        <button type="button" class="btn btn-outline-info btn-sm" ng-click = "showEditSongs($index)">E</button></td>  </tbody>
-</table>
-</div>
-<div class="col-md-6" ng-show = "!showAddSongButton">
-  <table class="table">
-  <thead class="thead-dark">
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">Name</th>
-      <th scope="col">Artist</th>
-      <th scope="col">Duration</th>
-      <th scope="col">Action</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr ng-repeat="song in songsAddedtoPlayList">
-      <td>{{$index+1}}</td>
-      <td>{{song.songName}}</td>
-      <td>{{song.songArtist}}</td>
-      <td>{{song.songDuration}}</td>
-    </tr>
-  </tbody>
-  </table>
-</div>
-</div>
-  <div class="col-md-5" ng-show="showAddform">
-    <h4> Create Playlist</h4>
-  <form  name="PlayListForm" class"horizontal" ng-submit="addPlaylist(PlayListForm.$valid)">
-    <div class="form-group row">
-      <label>Playlist Name</label>
-        <input type="text" class="form-control" ng-model="playlistName" placeholder="Playlist Name" required>
-    </div>
-    <div class="form-group row">
-      <label>Description</label>
-        <textarea class="form-control" rows="3" ng-model="playlistDescription" placeholder="Playlist Description" minlength="2" required></textarea>
-        <span> Minimum 10 characters</span>
-    </div>
-    <button type="submit" class="btn btn-default" ng-disabled="PlayListForm.$invalid">Submit</button>
-  </form>
-  </div>
-  <div class="row">
-    <div class="col-md-6" ng-show = "songDatabase">
-      <table class="table">
-      <thead class="thead-dark">
-        <tr>
-          <th scope="col">#</th>
-          <th scope="col">Name</th>
-          <th scope="col">Artist</th>
-          <th scope="col">Duration</th>
-          <th scope="col">Action</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr ng-repeat="song in songs">
-          <td>{{$index+1}}</td>
-          <td>{{song.songName}}</td>
-          <td>{{song.songArtist}}</td>
-          <td>{{song.songDuration}}</td>
-          <td><button type="button" class="btn btn-outline-success btn-sm" ng-click="addSongstoPlaylist($index)">Add</button>
-    </tr>
-    </tbody>
-    </table>
-    </div>
-  </div>
-</div>
--->

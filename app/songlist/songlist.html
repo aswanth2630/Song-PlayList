@@ -45,7 +45,7 @@
 <form>
     <div class="form-group">
       <div class="input-group">
-        <div class="input-group-addon"><i class="fa fa-search"></i></div>
+        <div class="input-group-addon"></div>
         <input id="searchbox" type="text" class="form-control col-md-5" placeholder="Search by name" ng-model="searchSong">
       </div>
     </div>
@@ -68,7 +68,7 @@
       <td>{{song.songArtist}}</td>
       <td>{{song.songDuration}}</td>
       <td><button type="button" class="btn btn-outline-danger btn-sm" ng-click = "removeSong(song)">X</button>
-        <button type="button" class="btn btn-outline-info btn-sm" ng-click = "showEditSongs(song)">E</button></td>
+        <button type="button" class="btn btn-outline-info btn-sm" ng-click = "showEditSongs(song)"><i class="fa fa-pencil"></i></button></td>
       <!--<td><a class = "btn btn-danger" ng-click = "removeSong(song)">Delete</a></td>-->
     </tr>
   </tbody>
