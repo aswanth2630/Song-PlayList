@@ -4,13 +4,13 @@
   <div class="col-md-5">
   <div class="panel panel-default">
     <div class="row">
-      <button class="btn btn-secondary float-left" ng-click="addPlay()">Add Playlist</button>
+      <button class="btn btn-outline-info btn-sm float-left" ng-click="addPlay()"><i class="fa fa-plus"></i>Add Playlist</button>
       <div class="panel-heading"><h4>PlayList Details</h4></div>
     </div>
     <div class="panel-body">
       <div class="list-group">
         <div class="row" ng-repeat = "play in playlist">
-          <input class="col-md-8 list-group-item list-group-item-action pull-left" ng-click="showSongsInThePlaylist($index)" value={{play.playlistName}}>
+          <input class="col-md-8 list-group-item list-group-item-action pull-left" ng-click="showSongsInThePlaylist($index)" ng-model="play.playlistName">
           <button class="col-md-1 btn btn-outline-info btn-sm pull-right" ng-click="deleteChange($index)">x</button>
           <button class="col-md-1 btn btn-outline-info btn-sm" ng-click="editChange($index)"><i class="fa fa-pencil"></i></button>
       </div>

@@ -43,16 +43,16 @@ angular.module('myApp.playList', ['ngRoute', 'ngScrollbars'])
     }
 
     $scope.editChange = function (index) {
-      Object.keys($scope.playlist[index]).forEach(function (key) {
-        var val = $scope.playlist[index][2];
-        $scope.playlist.$update($scope.playlist[index][key]);
-      console.log("dasda "+ $scope.playlist[index][key]);
+      playref.on("value",function(snap){
+          var key = Object.keys(snap.val())[index];
+          var record = $scope.playlist.$getRecord(key);
+        $scope.playlist.$save(record);
+      //  swal(record.playlistName, "is modified!", "success");
       });
     }
 
     $scope.deleteChange = function (index) {
       $scope.playlist.$remove($scope.playlist[index]);
-      $scope.apply;
     }
 
     $scope.gotoPage = function (paths) {
