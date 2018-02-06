@@ -4,8 +4,8 @@
 angular.module('myApp', [
   'ngRoute',
   'firebase',
-  'myApp.songlist',
-  'myApp.listplaylist',
+  'myApp.songList',
+  'myApp.playList',
   'ngScrollbars'
 ]).
 config(['$routeProvider', function($routeProvider) {
