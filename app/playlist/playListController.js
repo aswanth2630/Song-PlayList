@@ -19,6 +19,7 @@ angular.module('myApp.playList', ['ngRoute', 'ngScrollbars'])
     $scope.showPlaylist = false;
     var currentId = null;
 
+    //constants to switch the view
     $scope.showAddform = false;
     $scope.showTotalList = true;
     $scope.showAddPlaylistDetail = true;
@@ -44,7 +45,6 @@ angular.module('myApp.playList', ['ngRoute', 'ngScrollbars'])
     $scope.editChange = function (index) {
       Object.keys($scope.playlist[index]).forEach(function (key) {
         var val = $scope.playlist[index][2];
-        //  console.log("fsadfas "+$scope.playlist[index][key]);
         $scope.playlist.$update($scope.playlist[index][key]);
       console.log("dasda "+ $scope.playlist[index][key]);
       });
@@ -138,7 +138,6 @@ angular.module('myApp.playList', ['ngRoute', 'ngScrollbars'])
             var childData = childSnapshot.val();
             angular.forEach($scope.songs, function (value, key) {
               if (value.$id === childData) {
-                console.log("success" + value.songName);
                 // Add song to a songsperplaylist  object
                 var song = {};
                 song["songName"] = value.songName;

@@ -39,15 +39,12 @@ angular.module('myApp.songList', ['ngRoute'])
     }
 
     $scope.addSongs = function () {
-      console.log("Adding Songs to database");
-
       $scope.songs.$add({
         songName: $scope.songName,
         songArtist: $scope.songArtist,
         songDuration: $scope.songDuration
       }).then(function (ref) {
         var songId = ref.key;
-        console.log("song id is  " + songId);
         clearSong();
       });
       swal("Good job!", "You created the song!", "success");
@@ -71,7 +68,7 @@ angular.module('myApp.songList', ['ngRoute'])
       record.songDuration = $scope.songDuration;
 
       $scope.songs.$save(record).then(function (ref) {
-        console.log(ref.key);
+
       });
       clearSong();
       swal(record.songName, "is modified!", "success");
