@@ -41,10 +41,11 @@ angular.module('myApp.playList', ['ngRoute', 'ngScrollbars'])
       $scope.playlistDescription = '';
     }
 
-    $scope.submitChange = function (index) {
+    $scope.editChange = function (index) {
       Object.keys($scope.playlist[index]).forEach(function (key) {
         var val = $scope.playlist[index][2];
         //  console.log("fsadfas "+$scope.playlist[index][key]);
+        $scope.playlist.$update($scope.playlist[index][key]);
       console.log("dasda "+ $scope.playlist[index][key]);
       });
     }
@@ -110,9 +111,11 @@ angular.module('myApp.playList', ['ngRoute', 'ngScrollbars'])
       $scope.showTotalList = false;
       $scope.songDatabase = true;
       $scope.showEditForm = false;
-
-      $scope.addSongstoPlaylist();
-
+      var i = 0;
+      while(i>0){
+        $scope.addSongstoPlaylist();
+        i++;
+      }
     }
     // Adding songs to playlist
 
